@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title> My Game </title>
+<style>
+     img {
+            position: absolute;
+        }
+        div {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+        #rightSide {
+            left: 500px;
+            border-left: 1px solid black;
+        }
+</style>
+
+</head>
+
+<body>
+
+<h1> Matching game </h1>
+<div id="leftSide">
+</div>
+
+<div id="rightSide">
+</div>
+
+</body>
+</html>
+
+
+<script>
+  var number = 5;
+var theLeft = document.getElementById("leftSide");
+var theRight = document.getElementById("rightSide");
+var theBody = document.getElementsByTagName("body")[0];
+function mainGame()
+{
+  
+  while(theLeft.firstChild)
+  {
+    theLeft.removeChild(theLeft.firstChild);
+  }
+  
+  while(theRight.firstChild)
+  {
+    theRight.removeChild(theRight.firstChild);
+  }
+
+  for(var i=0;i<number;i++)
+  {
+    var node = document.createElement("img");
+    node.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+    node.style.top = Math.floor(Math.random() * 401) + "px";
+    node.style.left = Math.floor(Math.random() * 401) + "px";
+    theLeft.appendChild(node);
+  }
+  
+  var temp = theLeft.cloneNode(true);
+  temp.removeChild(temp.lastChild);
+  theRight.appendChild(temp);
+  
+  theLeft.lastChild.onclick = function nextGame(event)
+  {
+    event.stopPropagation();
+    number += 2;
+    mainGame();
+  }
+}
+
+mainGame();
+
+theBody.onclick = function gameOver()
+{
+  alert("Game over");
+  theBody.onclick = null;
+  theLeft.lastChild.onClick = null;
+}
+</script>
